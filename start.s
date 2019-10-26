@@ -1,19 +1,15 @@
 #define HLT		BYTE $0xF4
-#define PDO(a)		(((((a))>>22) & 0x03FF)<<2)
 TEXT _multiboot(SB), $0
-	// multiboot magic
-	LONG	$0x1BADB002
-	// flags
-	LONG	$0x00000003
-	// checksum
-	LONG	$-(0x1BADB002 + 0x00000003)
+	LONG	$0x1BADB002			/* multiboot magic*/
+	LONG	$0x00000003			/* flags */
+	LONG	$-(0x1BADB002 + 0x00000003)	/* checksum */
+
+GLOBL	stack_static+0(SB), $4000			/* statically allocated stack */
 
 TEXT _startkernel(SB), $0
-	MOVL	$0xF0100000, SP		/* initialize stack */
+	MOVL	$stack_static+0(SB), SP
 	MOVL	$0, 0(SP)
-
-	ADDL	$0x00004000, SP
-
+	ADDL	$4000, SP			/* move address of stack to SP */
 	CALL	kernel_main(SB)
 	CLI
 inf_loop:
