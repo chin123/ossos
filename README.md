@@ -4,8 +4,9 @@ OSDev recommends usage of gcc, however kencc is a much nicer alternative.
 # Compilation
 * get kencc
 * `8a start.s`
+* `8a boot.s`
 * `8c kernel.c`
-* `8l -o prog -l -R1 -H5 -T0x100000 start.8 kernel.8`
+* `8l -o prog -l -R1 -H5 -T0x100000 start.8 boot.8 kernel.8`
 * `qemu-system-i386 -kernel prog`
 
 # Legal
